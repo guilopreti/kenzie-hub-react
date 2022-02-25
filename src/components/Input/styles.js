@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Container = styled.div`
   display: flex;
@@ -13,7 +13,7 @@ export const DivLabel = styled.div`
   width: 100%;
 
   label {
-    color: #f8f9fa;
+    color: ${(props) => (props.isErrored ? "#c53030" : "#f8f9fa")};
     font-size: 10px;
     font-weight: 400;
     margin-bottom: 18px;
@@ -24,18 +24,25 @@ export const DivLabel = styled.div`
     font-size: 10px;
     font-weight: 400;
     margin-bottom: 18px;
+    margin-left: 4px;
+    color: #c53030;
   }
 `;
 
 export const DivInput = styled.div`
   margin-bottom: 21px;
   width: 100%;
-  border: 1px solid #f8f9fa;
+  border: 1px solid ${(props) => `${props.border}`};
   height: 38px;
   background-color: #343b41;
   border-radius: 4px;
   display: flex;
   align-items: center;
+  ${(props) =>
+    props.isErrored &&
+    css`
+      border-color: #c53030;
+    `}
 
   input {
     background-color: #343b41;
@@ -49,5 +56,9 @@ export const DivInput = styled.div`
 
   input:focus {
     outline: 0;
+  }
+
+  @media (min-width: 769px) {
+    height: 48px;
   }
 `;
