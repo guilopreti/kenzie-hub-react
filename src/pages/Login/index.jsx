@@ -4,11 +4,11 @@ import { Container, Content, FormContent, DivNoCad } from "./styles";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import api from "../../services/api";
 import { toast } from "react-toastify";
 
-const Login = () => {
+const Login = ({ authenticated, setAuthenticated }) => {
   const schema = yup.object().shape({
     email: yup.string().email("Email inválido").required("Campo Obrigatório"),
     password: yup
@@ -35,10 +35,15 @@ const Login = () => {
         localStorage.setItem("@KZHub:token", JSON.stringify(token));
         localStorage.setItem("@KZHub:user", JSON.stringify(user));
         toast.success("Bem-Vindo!");
+        setAuthenticated(true);
         return history.push("/dashboard");
       })
       .catch((_) => toast.error("Tente novamente"));
   };
+
+  if (authenticated) {
+    return <Redirect to={"/dashboard"} />;
+  }
 
   return (
     <Container>

@@ -34,8 +34,11 @@ export const DivHead = styled.div`
     padding: 0;
   }
 
-  @media (min-width: 769px) {
+  @media (min-width: 915px) {
+    justify-content: center;
+
     h1 {
+      margin-right: 585px;
       font-size: 25px;
     }
 
@@ -64,6 +67,12 @@ export const DivUser = styled.div`
     margin-left: 12px;
     margin-top: 10px;
   }
+
+  @media (min-width: 915px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const AddTec = styled.div`
@@ -88,5 +97,29 @@ export const AddTec = styled.div`
     padding: 0;
     font-size: 22px;
     margin-right: 14px;
+  }
+
+  @media (min-width: 915px) {
+    justify-content: center;
+
+    h3 {
+      margin-right: 650px;
+    }
+  }
+`;
+
+export const Content = styled.div`
+  max-width: 742px;
+  padding: 22px 18px;
+  width: 82%;
+  display: flex;
+  flex-direction: column;
+  background-color: #212529;
+  align-items: center;
+  border-radius: 4px;
+  box-shadow: 0px 3.20867px 32.0867px -8.02168px rgba(0, 0, 0, 0.25);
+
+  ul {
+    width: 100%;
   }
 `;

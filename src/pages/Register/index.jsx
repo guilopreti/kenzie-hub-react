@@ -4,12 +4,12 @@ import { Container, Content, FormContent, DivHead } from "./styles";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import { useState } from "react";
 import api from "../../services/api";
 import { toast } from "react-toastify";
 
-const Register = () => {
+const Register = ({ authenticated }) => {
   const [module, setModule] = useState(
     "Primeiro módulo (Introdução ao Frontend)"
   );
@@ -62,6 +62,10 @@ const Register = () => {
       })
       .catch((_) => toast.error("Ops! Algo deu errado"));
   };
+
+  if (authenticated) {
+    return <Redirect to={"/dashboard"} />;
+  }
 
   return (
     <Container>
