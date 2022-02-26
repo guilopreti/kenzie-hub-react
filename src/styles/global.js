@@ -1,4 +1,5 @@
-import { createGlobalStyle } from "styled-components";
+import { ToastContainer } from "react-toastify";
+import styled, { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
 
@@ -20,7 +21,7 @@ time, mark, audio, video {
 	padding: 0;
 	border: 0;
 	font-size: 100%;
-	font-family: 'Inter', sans-serif;
+	
 	vertical-align: baseline;
 }
 
@@ -30,6 +31,8 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	background-color: #121214;
+	font-family: 'Inter', sans-serif;
 }
 ol, ul {
 	list-style: none;
@@ -55,14 +58,28 @@ a{
 }
 
 #root{
-	height: 100vh;
+	height: 100%;
 }
 
 :root{
 	
-	--toastify-color-success: #07bc0c;
-  --toastify-color-error: #e74c3c;
+	--toastify-color-success: #3FE864;
+  --toastify-color-error:#E83F5B;
+  
+ 
+  
 }
 `;
 
 export default GlobalStyle;
+
+export const StyledToastContainer = styled(ToastContainer)`
+  .Toastify__toast-theme--light {
+    background-color: #343b41;
+    color: #f8f9fa;
+  }
+
+  .Toastify__close-button svg {
+    color: #f8f9fa;
+  }
+`;

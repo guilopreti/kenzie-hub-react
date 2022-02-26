@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useHistory } from "react-router-dom";
+import api from "../../services/api";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const schema = yup.object().shape({
@@ -25,7 +27,18 @@ const Login = () => {
 
   const history = useHistory();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    api
+      .post("/sessions", data)
+      .then((resp) => {
+        const { token, user } = resp.data;
+        localStorage.setItem("@KZHub:token", JSON.stringify(token));
+        localStorage.setItem("@KZHub:user", JSON.stringify(user));
+        toast.success("Bem-Vindo!");
+        return history.push("/dashboard");
+      })
+      .catch((_) => toast.error("Tente novamente"));
+  };
 
   return (
     <Container>

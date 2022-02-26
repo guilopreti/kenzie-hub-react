@@ -1,11 +1,13 @@
 import Button from "../../components/Button";
 import Input from "../../components/Input";
-import { Container, Content, FormContent, DivNoCad } from "./styles";
+import { Container, Content, FormContent, DivHead } from "./styles";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
+import api from "../../services/api";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [module, setModule] = useState(
@@ -30,6 +32,11 @@ const Register = () => {
       .string()
       .required("Campo Obrigatório")
       .min(6, "Minímo 6 caracteres"),
+    name: yup.string().required("Campo Obrigatótrio"),
+    passwordConfirm: yup
+      .string()
+      .oneOf([yup.ref("password")], "Senhas diferentes")
+      .required("Campo Obrigatório"),
   });
 
   const {
@@ -43,20 +50,35 @@ const Register = () => {
   const history = useHistory();
 
   const onSubmit = (data) => {
-    const info = { ...data, course_module: module };
-    console.log(info);
+    delete data.passwordConfirm;
+
+    const info = { ...data, course_module: module, bio: " ", contact: " " };
+    api
+      .post("/users", info)
+      .then((resp) => {
+        console.log(resp.data);
+        toast.success("Conta criada com sucesso");
+        history.push("/login");
+      })
+      .catch((_) => toast.error("Ops! Algo deu errado"));
   };
 
   return (
     <Container>
-      <div>
+      <DivHead>
         <h1>Kenzie Hub</h1>
-        <Button>Voltar</Button>
-      </div>
+        <Button
+          background={"#212529"}
+          color={"#F8F9FA"}
+          onClick={() => history.push("/")}
+        >
+          Voltar
+        </Button>
+      </DivHead>
 
       <Content>
         <h2>Crie sua conta</h2>
-        <span>Rapido e grátis, vamos nessa</span>
+        <p>Rapido e grátis, vamos nessa</p>
         <FormContent onSubmit={handleSubmit(onSubmit)}>
           <Input
             placeholder="Digite aqui seu nome"
@@ -88,6 +110,8 @@ const Register = () => {
             register={register}
             error={errors.passwordConfirm?.message}
           />
+
+          <label>Selecionar Módulo</label>
           <select onChange={(evt) => changeMod(evt.target.value)}>
             <option>Primeiro módulo</option>
             <option>Segundo módulo</option>
