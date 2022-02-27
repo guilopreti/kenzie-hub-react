@@ -20,9 +20,7 @@ const ChangeTec = ({ showChange, setShowChange, infoLi }) => {
   const onSubmit = (a, evt) => {
     const info = { status: status };
 
-    if (
-      evt.nativeEvent.submitter.className === "sc-bdvvtL gRbZEl button-exclui"
-    ) {
+    if (evt.nativeEvent.submitter.innerText === "Excluir") {
       api
         .delete(`/users/techs/${infoLi.id}`, {
           headers: {
